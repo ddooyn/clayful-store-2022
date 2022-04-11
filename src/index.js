@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import clayful from "clayful/client-js";
 import axios from "axios";
+import "./css/auth.css";
 
 clayful.config({
   client:

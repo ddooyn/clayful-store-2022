@@ -1,14 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import clayful from "clayful/client-js";
 
 function RegisterPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleEmailChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const Customer = clayful.Customer;
+
+    const payload = {
+      email,
+      password,
+    };
+
+    Customer.createMe(payload, function (err, result) {
+      if (err) {
+        // Error case
+        console.log(err.code);
+      }
+      const data = result.data;
+      console.log(data);
+    });
+  };
+
   return (
     <div className="auth-wrapper">
       <h1>회원가입.</h1>
-      <form>
-        <input name="email" type="email" placeholder="Apple Id" value="" />
-        <input name="password" type="password" placeholder="암호" value="" />
-
+      <form onSubmit={handleSubmit}>
+        <input
+          name="email"
+          type="email"
+          value={email}
+          onChange={handleChange}
+          placeholder="Apple Id"
+        />
+        <input
+          name="password"
+          type="password"
+          value={password}
+          onChange={handleEmailChange}
+          placeholder="암호"
+        />
         <button type="submit">회원가입.</button>
         <Link to="login" style={{ color: "gray", textDecoration: "none" }}>
           {" "}
