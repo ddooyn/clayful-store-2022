@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./components/LandingPage/LandingPage";
-import LoginPage from "./components/LoginPage/LoginPage";
-import RegisterPage from "./components/RegisterPage/RegisterPage";
+import Header from "./components/Header";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AuthContextProvider from "./context/AuthContext";
 
 function App() {
   return (
     <AuthContextProvider>
+      <Header />
       <Routes>
         <Route path="/" element={<LandingPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
