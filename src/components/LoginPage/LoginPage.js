@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import clayful from "clayful/client-js";
+import { AuthContext } from "../../context/AuthContext";
 
 function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { isAuthenticated } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -17,7 +19,7 @@ function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const Customer = clayful.Customer;
-    
+
     const payload = {
       email,
       password,
@@ -31,8 +33,9 @@ function LoginPage() {
       const data = result.data;
       console.log(data);
       localStorage.setItem("customerUid", data.customer);
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("accessToken", data.token);
       navigate('/');
+      isAuthenticated();
     });
   };
 
