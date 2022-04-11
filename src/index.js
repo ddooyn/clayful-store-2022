@@ -1,17 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import clayful from "clayful/client-js";
+import axios from "axios";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+clayful.config({
+  client:
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImYzY2Y0NmJkNDBlMGJmNmMxMmZjNTg0N2U4OWNhMGVjMjg0MTNkZTlkMjFmZTAzZDNhZmQzYzE2ZTVlMDc1NzgiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNjQwOTYxNDI4LCJzdG9yZSI6IlVUQTdKQ0tVS0JWNS5HQ1M4QVRVSEhMRFoiLCJzdWIiOiIyUDVFSFlIVllNWlkifQ.8lzKg2GFhYC6zJr8NY6MZm2fnly6sE9eQNylYDjpdjE",
+});
+clayful.install("request", require("clayful/plugins/request-axios")(axios));
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
