@@ -1,15 +1,16 @@
-.auth-wrapper h1 {
+.auth-wrapper {
+  h1 {
     font-weight: 700;
     margin-top: 30px;
     font-size: 40px;
-}
+  }
 
-.auth-wrapper form {
+  form {
     margin-top: 70px;
     max-width: 400px;
-}
+  }
 
-.auth-wrapper input {
+  input {
     max-width: 400px;
     border-color: #d2d2d7;
     width: 100%;
@@ -17,15 +18,15 @@
     border-radius: 12px;
     margin-bottom: 0.8rem;
     padding: 1rem 0 0.9rem;
-}
+  }
 
-.auth-wrapper a {
+  a {
     margin-top: 10px;
     color: #06c;
     text-decoration: none;
-}
+  }
 
-.auth-wrapper button {
+  button {
     background: #0071e3;
     color: #fff;
     font-size: 17px;
@@ -35,4 +36,5 @@
     width: 100%;
     border-radius: 12px;
     margin-bottom: 10px;
+  }
 }
