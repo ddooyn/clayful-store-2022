@@ -45,6 +45,8 @@ const AuthContextProvider = ({ children }) => {
     signOut,
   };
 
+  console.log(`상태: ${isAuth}`)
+
   return (
     <AuthContext.Provider value={AuthContextData}>
       {children}
