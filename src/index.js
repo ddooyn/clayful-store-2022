@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
-import "./scss/index.scss";
-import "./scss/auth.scss";
+import "./styles/index.scss";
+import "./styles/auth.scss";
 import App from "./App";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
