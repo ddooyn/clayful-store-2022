@@ -1,0 +1,286 @@
+.white {
+  color: #fff;
+}
+.black {
+  color: #1d1d1f;
+}
+.grey {
+  color: #86868b;
+}
+
+/* welcome */
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  margin-top: 72px;
+  background: 0 -90px / cover url("../../images/home/landingPage.jpeg") no-repeat;
+  h1 {
+    font-family: "Noto Sans KR", sans-serif;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+}
+
+/* section product */
+.product-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 50px 0;
+  h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1070px;
+}
+// 📝 grid는 나중에 작성
+
+/* global section */
+.left-side-container,
+.right-side-container {
+  min-height: 515px;
+  // background: center / cover no-repeat;
+  text-align: center;
+}
+
+.left-side-wrapper,
+.right-side-wrapper {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.description-wrapper {
+  padding: 10px 0;
+  // font-size: 26px;
+  &.white {
+    color: white;
+  }
+}
+
+.links-wrapper {
+  padding: 15px 0;
+  ul li {
+    display: inline-block;
+    padding-right: 20px;
+    a {
+      color: #06c;
+      text-decoration: none;
+      font-size: 21px;
+      &:hover {
+        color: #000;
+      }
+      &::after {
+        padding-left: 10px;
+        font-family: "FontAwesome";
+        content: "\f105";
+        font-weight: 900;
+      }
+    }
+  }
+}
+
+.title-wrapper {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15em;
+  letter-spacing: -0.04em;
+  &.bold {
+    font-size: 32px;
+  }
+}
+
+.right-side-wrapper {
+  .title-wrapper {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* first section */
+.first-hightlight-wrapper {
+  padding: 65px 20px;
+  margin-bottom: 10px;
+  background: #fbfbfd;
+  color: #fff;
+  text-align: center;
+}
+
+/* second section */
+.second-hightlight-wrapper {
+  .left-side-wrapper {
+    .left-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #000 bottom / cover
+        url(../../images/home/iphone11-colored.jpg) no-repeat;
+    }
+  }
+  .right-side-wrapper {
+    .right-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #165ca9 bottom / auto
+        url(../../images/home/apple-blue-logo.jpg) no-repeat;
+    }
+    .title-wrapper {
+      max-width: 380px;
+      margin: 0 auto;
+    }
+  }
+  .links-wrapper.white {
+    li a {
+      color: #fff;
+    }
+  }
+}
+
+/* third section */
+.third-hightlight-wrapper {
+  // padding: 65px 20px;
+  background: #fff center / cover no-repeat;
+  text-align: center;
+  .left-side-wrapper {
+    .left-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #000 bottom left / cover url("../../images/home/actors.jpg");
+      color: #fff;
+    }
+  }
+  .right-side-wrapper {
+    .right-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #fbfbfd bottom / auto url("../../images/home/watch.jpg")
+        no-repeat;
+    }
+  }
+  .description-wrapper {
+    max-width: 450px;
+    margin: 7px auto;
+  }
+  .tvshow-logo-wraper {
+    padding: 340px 0 0px;
+  }
+  .watch-more-wrapper {
+    a {
+      color: #fff;
+      font-size: 0.85em;
+      text-decoration: none;
+      &::after {
+        padding-left: 15px;
+        font-family: "FontAwesome";
+        content: "\f144";
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* fourth section */
+.fourth-hightlight-wrapper {
+  .left-side-wrapper {
+    .left-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #000 bottom / cover url(../../images/home/spyder.jpg)
+        no-repeat;
+    }
+  }
+  .right-side-wrapper {
+    .right-side-container {
+      padding-top: 35px;
+      margin: 0 0 10px 0;
+      background: #fbfbfd bottom / cover
+        url(../../images/home/apple-card-monthly.jpg) no-repeat;
+    }
+  }
+  .description-wrapper {
+    max-width: 250px;
+    margin: 7px auto;
+  }
+}
+
+/* Media Query */
+@media (min-width: 768px) {
+  /* Navbar */
+  .nav-item {
+    padding: 0;
+    border-bottom: 0px;
+    text-align: center !important;
+  }
+
+  /* global section */
+  .title-wrapper.bold {
+    font-size: 56px;
+  }
+
+  /* first section */
+  .first-hightlight-wrapper {
+    min-height: 692px;
+    background: bottom url("../../images/home/macbookair-new.jpg") no-repeat;
+  }
+  .new-alert {
+    color: #bf4801;
+    font-size: 18px;
+  }
+
+  /* second section */
+  .second-hightlight-wrapper {
+    .left-side-wrapper {
+      .left-side-container {
+        margin: 10px 5px 5px 10px;
+      }
+    }
+    .right-side-wrapper {
+      .right-side-container {
+        margin: 10px 10px 5px 5px;
+      }
+    }
+  }
+
+  /* third section */
+  .third-hightlight-wrapper {
+    .left-side-wrapper {
+      .left-side-container {
+        margin: 10px 5px 5px 10px;
+      }
+    }
+    .right-side-wrapper {
+      .right-side-container {
+        margin: 10px 10px 5px 5px;
+      }
+    }
+  }
+
+  /* fourth section */
+  .fourth-hightlight-wrapper {
+    .left-side-wrapper {
+      .left-side-container {
+        margin: 10px 5px 5px 10px;
+      }
+    }
+    .right-side-wrapper {
+      .right-side-container {
+        margin: 10px 10px 5px 5px;
+      }
+    }
+    .links-wrapper {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+}
