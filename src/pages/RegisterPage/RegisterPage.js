@@ -35,30 +35,32 @@ function RegisterPage() {
   };
 
   return (
-    <div className="auth-wrapper">
-      <h1>회원가입.</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          value={email}
-          onChange={handleChange}
-          placeholder="Apple Id"
-        />
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={handleEmailChange}
-          placeholder="암호"
-        />
-        <button type="submit">회원가입.</button>
-        <Link to="login" style={{ color: "gray", textDecoration: "none" }}>
-          {" "}
-          이미 Apple ID가 있다면? 지금 로그인.
-        </Link>
-      </form>
-    </div>
+<div className="page-wrapper">
+      <div className="auth-wrapper">
+        <h1>회원가입.</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="email"
+            type="email"
+            value={email}
+            onChange={handleChange}
+            placeholder="Apple Id"
+          />
+          <input
+            name="password"
+            type="password"
+            value={password}
+            onChange={handleEmailChange}
+            placeholder="암호"
+          />
+          <button type="submit">회원가입.</button>
+          <Link to="/login" style={{ color: "gray", textDecoration: "none" }}>
+            {" "}
+            이미 Apple ID가 있다면? 지금 로그인.
+          </Link>
+        </form>
+      </div>
+</div>
   );
 }
 

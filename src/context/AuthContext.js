@@ -15,13 +15,12 @@ const AuthContextProvider = ({ children }) => {
       customer: localStorage.getItem("accessToken"),
     };
 
-    Customer.authenticate(options, function (err, result) {
+    Customer.isAuthenticated(options, function (err, result) {
       if (err) {
         console.log(err.code);
         setIsAuth(false);
         return;
       }
-      const headers = result.headers;
       const data = result.data;
       console.log(data);
 
@@ -44,8 +43,6 @@ const AuthContextProvider = ({ children }) => {
     isAuthenticated,
     signOut,
   };
-
-  console.log(`상태: ${isAuth}`)
 
   return (
     <AuthContext.Provider value={AuthContextData}>

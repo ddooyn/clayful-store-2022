@@ -19,7 +19,7 @@ function LandingPage() {
     console.log(response.headers);
     console.log(response.data);
   });
-  return <div>LandingPage 성공적?</div>;
+  return <div className="page-wrapper">LandingPage 성공적?</div>;
 }
 
 export default LandingPage;

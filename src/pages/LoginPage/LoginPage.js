@@ -34,39 +34,41 @@ function LoginPage() {
       console.log(data);
       localStorage.setItem("customerUid", data.customer);
       localStorage.setItem("accessToken", data.token);
-      navigate('/');
+      navigate("/");
       isAuthenticated();
     });
   };
 
   return (
-    <div className="auth-wrapper">
-      <h1>로그인.</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          value={email}
-          onChange={handleChange}
-          placeholder="Apple Id"
-        />
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={handleEmailChange}
-          placeholder="암호"
-        />
-        <p>
-          Apple ID는 iTunes, App Store, iCloud에 로그인할 때 사용하는 이메일
-          주소입니다.
-        </p>
-        <button type="submit">로그인.</button>
-        <Link to="register" style={{ color: "gray", textDecoration: "none" }}>
-          {" "}
-          Apple ID가 없으신가요? 지금 생성.
-        </Link>
-      </form>
+    <div className="page-wrapper">
+      <div className="auth-wrapper">
+        <h1>로그인.</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="email"
+            type="email"
+            value={email}
+            onChange={handleChange}
+            placeholder="Apple Id"
+          />
+          <input
+            name="password"
+            type="password"
+            value={password}
+            onChange={handleEmailChange}
+            placeholder="암호"
+          />
+          <p>
+            Apple ID는 iTunes, App Store, iCloud에 로그인할 때 사용하는 이메일
+            주소입니다.
+          </p>
+          <button type="submit">로그인.</button>
+          <Link to="/register" style={{ color: "gray", textDecoration: "none" }}>
+            {" "}
+            Apple ID가 없으신가요? 지금 생성.
+          </Link>
+        </form>
+      </div>
     </div>
   );
 }
