@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
+import AuthContextProvider from "./context/AuthContext";
 import Header from "./components/Header";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import AuthContextProvider from "./context/AuthContext";
+import DetailProductPage from "./pages/DetailProductPage/DetailProductPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<LandingPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
+        <Route path="/product/:productId" element={<DetailProductPage />}></Route>
       </Routes>
     </AuthContextProvider>
   );
