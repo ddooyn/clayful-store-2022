@@ -15,7 +15,7 @@ function Header() {
   }, [isAuthenticated]);
 
   return (
-    <div className="nav-wrapper fixed-top navbar navbar-toggleable-sm navbar-expand-md">
+    <header className="nav-wrapper fixed-top navbar navbar-toggleable-sm navbar-expand-md">
       <div className="container">
         <Navbar className="w-100" collapseOnSelect expand="lg" variant="dark">
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -44,7 +44,7 @@ function Header() {
           </Navbar.Collapse>
         </Navbar>
       </div>
-    </div>
+    </header>
   );
 }
 
