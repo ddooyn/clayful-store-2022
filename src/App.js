@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import GlobalStyles from "./styles/GlobalStyles";
 import Header from "./components/Header";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -8,6 +9,7 @@ import AuthContextProvider from "./context/AuthContext";
 function App() {
   return (
     <AuthContextProvider>
+      <GlobalStyles />
       <Header />
       <Routes>
         <Route path="/" element={<LandingPage />}></Route>
