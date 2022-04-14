@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import DetailProductPage from "./pages/DetailProductPage/DetailProductPage";
+import CartPage from "./pages/CartPage/CartPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/product/:productId" element={<DetailProductPage />}></Route>
+        <Route path="/user/cart" element={<CartPage />}></Route>
       </Routes>
     </AuthContextProvider>
   );

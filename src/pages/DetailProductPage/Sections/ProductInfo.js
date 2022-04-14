@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./ProductInfo.scss";
 import { AuthContext } from "../../../context/AuthContext";
@@ -43,10 +43,16 @@ function ProductInfos({ detail }) {
         console.log(err.code);
         return;
       }
-      setShow(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 3000);
+      if (type === "cart") {
+        setShow(true);
+        setTimeout(() => {
+          setShow(false);
+        }, 3000);
+      } else {
+        setTimeout(() => {
+          navigate("/user/cart");
+        }, 500);
+      }
     });
   };
 
@@ -92,9 +98,9 @@ function ProductInfos({ detail }) {
       >
         장바구니에 담기
       </button>
-      <Link to={`/user/cart`} className="product-info-action">
+      <button onClick={() => handleActionClick("pay")} className="product-info-action">
         바로 구매
-      </Link>
+      </button>
     </ProductSection>
   );
 }
