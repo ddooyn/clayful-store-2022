@@ -1,0 +1,45 @@
+.shopping-cart {
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    border-radius: 6px;
+    box-shadow: 0px 2px 5px 5px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    .title {
+        font-family: "Noto Sans KR", sans-serif;
+        height: 60px;
+        padding: 20px 30px;
+        border-bottom: 1px solid #e1e8ee;
+        color: #5e6977;
+        font-size: 18px;
+        font-weight: 300;
+    }
+    .bottom {
+        height: 80px;
+        padding: 20px 30px;
+        color: #5e6977;
+        font-size: 18px;
+        font-weight: 400;
+        .total-price {
+            width: 83px;
+            padding-top: 27px;
+            text-align: center;
+            color: #43483d;
+            font-size: 16px;
+            font-weight: 300;
+        }
+        button {
+            height: 2.3rem;
+            padding: 4px 8px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #555;
+            color: #fff;
+            font-size: 13px;
+        }
+    }
+}
+
+.shopping-cart-body {
+    min-height: 100px;
+}
