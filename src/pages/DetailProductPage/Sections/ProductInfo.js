@@ -5,22 +5,49 @@ import "./ProductInfo.scss";
 
 function ProductInfos({ detail }) {
   const [count, setCount] = useState(1);
-  if (!detail) return;
-  
+  const handleQuantityClick = (type) => {
+    if (type === "plus") {
+      setCount((prev) => prev + 1);
+    } else {
+      if (count === 1) return;
+      setCount((prev) => prev - 1);
+    }
+  };
+
   return (
     <ProductSection>
       <New>New</New>
       <ProductTitle>{detail.name} 구입하기</ProductTitle>
-      <ProductSummary>개별 판매 가격 {detail.price?.original.formatted}</ProductSummary>
+      <ProductSummary>
+        개별 판매 가격 {detail.price?.original.formatted}
+      </ProductSummary>
       <div className="quantity">
         <Quantity>수량</Quantity>
-        <button type="button" name="button" className="plus-btn">+</button>
+        <button
+          onClick={() => handleQuantityClick("minus")}
+          type="button"
+          name="button"
+          className="minus-btn"
+        >
+          -
+        </button>
         <input type="text" readOnly name="number" value={count} />
-        <button type="button" name="button" className="minus-btn">-</button>
+        <button
+          onClick={() => handleQuantityClick("plus")}
+          type="button"
+          name="button"
+          className="plus-btn"
+        >
+          +
+        </button>
       </div>
-      <ProductPrice>총 상품 금액: {detail.price?.original.raw * count}원</ProductPrice>
+      <ProductPrice>
+        총 상품 금액: {(detail.price?.original.raw * count).toLocaleString()}원
+      </ProductPrice>
       <button className="product-info-action">장바구니에 담기</button>
-      <Link to={`/user/cart`} className="product-info-action">바로 구매</Link>
+      <Link to={`/user/cart`} className="product-info-action">
+        바로 구매
+      </Link>
     </ProductSection>
   );
 }
