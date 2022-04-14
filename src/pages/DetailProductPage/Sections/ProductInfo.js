@@ -1,10 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./ProductInfo.scss";
+import { AuthContext } from "../../../context/AuthContext";
+import clayful from "clayful/client-js";
+import Alert from "react-bootstrap/Alert";
 
 function ProductInfos({ detail }) {
+  const navigate = useNavigate();
   const [count, setCount] = useState(1);
+  const [show, setShow] = useState(false);
+  const { isAuth } = useContext(AuthContext);
+
   const handleQuantityClick = (type) => {
     if (type === "plus") {
       setCount((prev) => prev + 1);
@@ -14,8 +21,43 @@ function ProductInfos({ detail }) {
     }
   };
 
+  const handleActionClick = (type) => {
+    if (!isAuth) {
+      alert("먼저 로그인해주세요");
+      navigate("/login");
+      return;
+    }
+    const Cart = clayful.Cart;
+    const payload = {
+      product: detail._id,
+      variant: detail.variants[0]._id,
+      quantity: count,
+      shippingMethod: detail.shipping.methods[0]._id,
+    };
+    const options = {
+      customer: localStorage.getItem("accessToken"),
+    };
+
+    Cart.addItemForMe(payload, options, function (err, result) {
+      if (err) {
+        console.log(err.code);
+        return;
+      }
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 3000);
+    });
+  };
+
   return (
     <ProductSection>
+      {show && (
+        <Alert variant="info">
+          <Alert.Heading>상품이 장바구니에 담겼습니다.</Alert.Heading>
+          <p>장바구니에서 확인해주세요.</p>
+        </Alert>
+      )}
       <New>New</New>
       <ProductTitle>{detail.name} 구입하기</ProductTitle>
       <ProductSummary>
@@ -44,7 +86,12 @@ function ProductInfos({ detail }) {
       <ProductPrice>
         총 상품 금액: {(detail.price?.original.raw * count).toLocaleString()}원
       </ProductPrice>
-      <button className="product-info-action">장바구니에 담기</button>
+      <button
+        onClick={() => handleActionClick("cart")}
+        className="product-info-action"
+      >
+        장바구니에 담기
+      </button>
       <Link to={`/user/cart`} className="product-info-action">
         바로 구매
       </Link>
