@@ -5,16 +5,16 @@ import "./PaymentPage.scss";
 
 function PaymentPage() {
   const [cart, setCart] = useState({});
-  const [paymentMethods, setPaymentMethods] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [recvUserInfo, setRecvUserInfo] = useState({
-    mobile: "",
-    full: "",
-  });
+  const [paymentMethods, setPaymentMethods] = useState([]);
   const [sendUserInfo, setSendUserInfo] = useState({
     full: "",
     mobile: "",
+  });
+  const [recvUserInfo, setRecvUserInfo] = useState({
+    mobile: "",
+    full: "",
   });
   const [address, setAddress] = useState({
     postCode: "",
@@ -53,6 +53,7 @@ function PaymentPage() {
       }
       const data = result.data;
       setPaymentMethods(data);
+      console.log(paymentMethods);
     });
   };
 
@@ -66,7 +67,7 @@ function PaymentPage() {
 
   const handleRecvChange = (e) => {
     const { name, value } = e.target;
-    setSendUserInfo((prevState) => ({
+    setRecvUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -152,10 +153,21 @@ function PaymentPage() {
             <input type="text" readOnly placeholder="우편번호" />
 
             <Subtitle>결제</Subtitle>
-            <select>
-              <option>옵션</option>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <option>결제 수단 선택</option>
+              {paymentMethods.map((method) => (
+                <option key={method.slug} value={method.slug}>
+                  {method.name}
+                </option>
+              ))}
             </select>
             <PaymentBtn type="button">주문</PaymentBtn>
+            {paymentMethod === "bank-transfer" && (
+              <AccountNum>계좌번호: 1111-1111-11111 키위은행</AccountNum>
+            )}
           </div>
         </PaymentInfo>
       </div>
@@ -200,5 +212,9 @@ const PaymentInfo = styled.article`
 
 const PaymentBtn = styled.button`
   width: 100%;
+  margin-top: 10px;
+`;
+
+const AccountNum = styled.p`
   margin-top: 10px;
 `;
