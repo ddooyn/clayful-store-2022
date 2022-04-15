@@ -1,6 +1,6 @@
 import React from "react";
 
-function CartItem({ product, quantity, price, index, buttonHandler }) {
+function CartItem({ _id, product, quantity, price, index, buttonHandler, deleteItemHandler }) {
   // if (!item.product) return null;
   return (
     <div className="item">
@@ -43,7 +43,7 @@ function CartItem({ product, quantity, price, index, buttonHandler }) {
       </div>
 
       <div className="buttons">
-        <button type="button" className="delete-btn">
+        <button type="button" className="delete-btn" onClick={() => deleteItemHandler(_id, price.original.raw)}>
           X
         </button>
       </div>

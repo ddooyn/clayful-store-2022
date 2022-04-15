@@ -39,7 +39,6 @@ function CartPage() {
   }
 
   const buttonHandler = (type, index) => {
-    // console.log('cart', {...cart});
     let newCart = { ...cart };
     const price = newCart.items[index].price.original.raw / newCart.items[index].quantity.raw;
 
@@ -56,10 +55,28 @@ function CartPage() {
       newCart.total.amount.raw -= price;
       newCart.items[index].quantity.raw -= 1;
     }
-    
+
     updateItemData(newCart.items[index]._id, newCart.items[index].quantity.raw);
     setCart(newCart);
   };
+
+  const removeItemFromState = (itemId, price) => {
+    const newCart = {...cart};
+    const filteredItems = newCart.items.filter(item => item._id !== itemId);
+    newCart.items = filteredItems;
+    newCart.total.amount.raw = newCart.total.amount.raw - price;
+    setCart(newCart);
+  }
+
+  const deleteItemHandler = (itemId, price) => {
+    Cart.deleteItemForMe(itemId, options, function(err, result) {
+      if (err) {
+        console.log(err.code);
+        return;
+      }
+      removeItemFromState(itemId, price);
+    });
+  }
 
   const items = cart.items;
 
@@ -77,6 +94,7 @@ function CartPage() {
                   {...item}
                   index={index}
                   buttonHandler={(type, index) => buttonHandler(type, index)}
+                  deleteItemHandler={(itemId, price) => deleteItemHandler(itemId, price)}
                 />
               );
             })
