@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clayful from "clayful/client-js";
-import CartItem from "./Sections/CartItem"
+import CartItem from "./Sections/CartItem";
 import "./CartPage.scss";
 
 function CartPage() {
@@ -19,10 +19,29 @@ function CartPage() {
         return;
       }
       const data = result.data;
-      setCart(data.cart);
       console.log(data);
+      setCart(data.cart);
     });
   }, []);
+
+  const buttonHandler = (type, index) => {
+    // console.log('cart', {...cart});
+    let newCart = { ...cart };
+    if (type === "plus") {
+      // 해당 아이템 가격 변경
+      newCart.items[index].price.original.raw += (newCart.items[index].price.original.raw / newCart.items[index].quantity.raw);
+      // 전체 아이템 가격 변경
+      newCart.total.amount.raw +=  newCart.items[index].price.original.raw;
+      // 해당 아이템 개수 변경
+      newCart.items[index].quantity.raw += 1;
+    } else {
+      if (newCart.items[index].quantity.raw === 1) return;
+      newCart.items[index].price.original.raw -= (newCart.items[index].price.original.raw / newCart.items[index].quantity.raw);
+      newCart.total.amount.raw -= newCart.items[index].price.original.raw;
+      newCart.items[index].quantity.raw -= 1;
+    }
+    setCart(newCart);
+  };
 
   const items = cart.items;
 
@@ -34,7 +53,14 @@ function CartPage() {
         <div className="shopping-cart-body">
           {items && items.length > 0 ? (
             items.map((item, index) => {
-              return <CartItem key={item._id} item={item} index={index} />;
+              return (
+                <CartItem
+                  key={item._id}
+                  {...item}
+                  index={index}
+                  buttonHandler={(type, index) => buttonHandler(type, index)}
+                />
+              );
             })
           ) : (
             <p style={{ textAlign: "center", marginTop: "2rem" }}>
