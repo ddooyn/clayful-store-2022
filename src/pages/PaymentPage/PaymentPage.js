@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import clayful from "clayful/client-js";
 import styled from "styled-components";
 import "./PaymentPage.scss";
+import { useNavigate } from "react-router-dom";
 
 function PaymentPage() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -25,16 +27,17 @@ function PaymentPage() {
     country: "",
   });
 
+  const Cart = clayful.Cart;
+  const options = {
+    customer: localStorage.getItem("accessToken"),
+  };
+
   useEffect(() => {
     getCartData();
     getPaymentData();
   }, []);
 
   const getCartData = () => {
-    const Cart = clayful.Cart;
-    const options = {
-      customer: localStorage.getItem("accessToken"),
-    };
     Cart.getForMe({}, options, function (err, result) {
       if (err) {
         console.log(err.code);
@@ -53,7 +56,6 @@ function PaymentPage() {
       }
       const data = result.data;
       setPaymentMethods(data);
-      console.log(paymentMethods);
     });
   };
 
@@ -87,6 +89,89 @@ function PaymentPage() {
         mobile: sendUserInfo.mobile,
       });
     }
+  };
+
+  const handleCompletePaymentClick = () => {
+    const Customer = clayful.Customer;
+    const body = {
+      name: {
+        full: sendUserInfo.full,
+      },
+      mobile: sendUserInfo.mobile,
+    };
+
+    Customer.updateMe(body, options, function (err, result) {
+      if (err) {
+        console.log(err.code);
+        return;
+      }
+      const data = result.data;
+      console.log(data);
+
+      const items = [];
+      cart.items.map((item) => {
+        const itemVariable = {};
+        itemVariable.bundleItems = item.bundleItems;
+        itemVariable.product = item.product._id;
+        itemVariable.quantity = item.quantity.raw;
+        itemVariable.shippingMethod = item.shippingMethod._id;
+        itemVariable.variant = item.variant._id;
+        itemVariable._id = item._id;
+        return items.push(itemVariable);
+      });
+
+      const payload = {
+        items,
+        currency: cart.currency.payment.code,
+        paymentMethod,
+        address: {
+          shipping: {
+            name: {
+              full: recvUserInfo.full,
+            },
+            mobile: recvUserInfo.mobile,
+            phone: recvUserInfo.mobile,
+            postcode: address.postCode,
+            state: address.state,
+            city: address.city,
+            address1: address.address1,
+            address2: address.address2,
+            country: "KR",
+          },
+          billing: {
+            name: {
+              full: recvUserInfo.full,
+            },
+            mobile: recvUserInfo.mobile,
+            phone: recvUserInfo.mobile,
+            postcode: address.postCode,
+            state: address.state,
+            city: address.city,
+            address1: address.address1,
+            address2: address.address2,
+            country: "KR",
+          },
+        },
+      };
+
+      Cart.checkoutForMe("order", payload, options, function (err, result) {
+        if (err) {
+          console.log(err.code);
+          return;
+        }
+        const data = result.data;
+
+        Cart.emptyForMe(options, function (err, result) {
+          if (err) {
+            console.log(err.code);
+            return;
+          }
+          const data = result.data;
+
+          navigate("/history");
+        });
+      });
+    });
   };
 
   return (
@@ -164,7 +249,9 @@ function PaymentPage() {
                 </option>
               ))}
             </select>
-            <PaymentBtn type="button">주문</PaymentBtn>
+            <PaymentBtn type="button" onClick={handleCompletePaymentClick}>
+              주문
+            </PaymentBtn>
             {paymentMethod === "bank-transfer" && (
               <AccountNum>계좌번호: 1111-1111-11111 키위은행</AccountNum>
             )}
