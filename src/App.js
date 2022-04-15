@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import DetailProductPage from "./pages/DetailProductPage/DetailProductPage";
 import CartPage from "./pages/CartPage/CartPage";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/product/:productId" element={<DetailProductPage />}></Route>
         <Route path="/user/cart" element={<CartPage />}></Route>
+        <Route path="/payment" element={<PaymentPage />}></Route>
       </Routes>
     </AuthContextProvider>
   );
