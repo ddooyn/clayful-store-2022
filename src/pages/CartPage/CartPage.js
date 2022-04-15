@@ -7,12 +7,13 @@ import "./CartPage.scss";
 function CartPage() {
   const navigate = useNavigate();
   const [cart, setCart] = useState({});
-
+  
+  const Cart = clayful.Cart;
+  const options = {
+    customer: localStorage.getItem("accessToken"),
+  };
+  
   useEffect(() => {
-    const Cart = clayful.Cart;
-    const options = {
-      customer: localStorage.getItem("accessToken"),
-    };
     Cart.getForMe({}, options, function (err, result) {
       if (err) {
         console.log(err.code);
@@ -24,22 +25,39 @@ function CartPage() {
     });
   }, []);
 
+  const updateItemData = (itemId, quantity) => {
+    const payload = {
+      quantity
+    };
+
+    Cart.updateItemForMe(itemId, payload, options, function(err, result) {
+      if (err) {
+        console.log(err.code);
+        return;
+      }
+    });
+  }
+
   const buttonHandler = (type, index) => {
     // console.log('cart', {...cart});
     let newCart = { ...cart };
+    const price = newCart.items[index].price.original.raw / newCart.items[index].quantity.raw;
+
     if (type === "plus") {
       // 해당 아이템 가격 변경
-      newCart.items[index].price.original.raw += (newCart.items[index].price.original.raw / newCart.items[index].quantity.raw);
+      newCart.items[index].price.original.raw += price;
       // 전체 아이템 가격 변경
-      newCart.total.amount.raw +=  newCart.items[index].price.original.raw;
+      newCart.total.amount.raw += price;
       // 해당 아이템 개수 변경
       newCart.items[index].quantity.raw += 1;
     } else {
       if (newCart.items[index].quantity.raw === 1) return;
-      newCart.items[index].price.original.raw -= (newCart.items[index].price.original.raw / newCart.items[index].quantity.raw);
-      newCart.total.amount.raw -= newCart.items[index].price.original.raw;
+      newCart.items[index].price.original.raw -= price;
+      newCart.total.amount.raw -= price;
       newCart.items[index].quantity.raw -= 1;
     }
+    
+    updateItemData(newCart.items[index]._id, newCart.items[index].quantity.raw);
     setCart(newCart);
   };
 
