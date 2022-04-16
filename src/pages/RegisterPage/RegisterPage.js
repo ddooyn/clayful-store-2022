@@ -29,7 +29,6 @@ function RegisterPage() {
         return;
       }
       const data = result.data;
-      console.log(data);
       navigate("/login");
     });
   };

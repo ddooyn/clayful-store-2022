@@ -21,7 +21,6 @@ function DetailProductPage() {
         return;
       }
       const data = result.data;
-      console.log(data);
       setItem(data);
     });
   }, []);

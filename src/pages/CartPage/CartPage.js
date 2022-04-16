@@ -20,7 +20,6 @@ function CartPage() {
         return;
       }
       const data = result.data;
-      console.log(data);
       setCart(data.cart);
     });
   }, []);

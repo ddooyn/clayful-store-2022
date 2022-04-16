@@ -31,7 +31,6 @@ function LoginPage() {
         return;
       }
       const data = result.data;
-      console.log(data);
       localStorage.setItem("customerUid", data.customer);
       localStorage.setItem("accessToken", data.token);
       navigate("/");

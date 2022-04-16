@@ -25,7 +25,6 @@ function LandingPage() {
         console.log(err.message);
         return;
       }
-      console.log(response.data);
       setItems(response.data);
     });
   }, []);
