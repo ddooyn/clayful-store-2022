@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import clayful from "clayful/client-js";
 import styled from "styled-components";
 import "./PaymentPage.scss";
-import { useNavigate } from "react-router-dom";
+import PostCodeModal from "../../components/PostCodeModal";
 
 function PaymentPage() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function PaymentPage() {
     address2: "",
     country: "",
   });
+  const [show, setShow] = useState(false);
 
   const Cart = clayful.Cart;
   const options = {
@@ -105,8 +107,7 @@ function PaymentPage() {
         console.log(err.code);
         return;
       }
-      const data = result.data;
-      console.log(data);
+      // const data = result.data;
 
       const items = [];
       cart.items.map((item) => {
@@ -159,19 +160,53 @@ function PaymentPage() {
           console.log(err.code);
           return;
         }
-        const data = result.data;
+        // const data = result.data;
 
         Cart.emptyForMe(options, function (err, result) {
           if (err) {
             console.log(err.code);
             return;
           }
-          const data = result.data;
-
+          // const data = result.data;
           navigate("/history");
         });
       });
     });
+  };
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleCompletePostCode = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    handleClose();
+    setAddress((prevState) => ({
+      ...prevState,
+      postCode: data.zonecode,
+      state: data.sido,
+      city: data.sigungu,
+      address1: fullAddress,
+    }));
+  };
+
+  const handleAddress2Change = (e) => {
+    setAddress((prevState) => ({
+      ...prevState,
+      address2: e.target.value,
+    }));
   };
 
   return (
@@ -184,6 +219,7 @@ function PaymentPage() {
             (3,000원 배송비)
           </TotalAmount>
         </PaymentHeader>
+
         <PaymentInfo>
           <div style={{ width: "49%" }}>
             <Subtitle>주문자 정보</Subtitle>
@@ -227,15 +263,32 @@ function PaymentPage() {
             <input
               type="text"
               name="mobile"
-              value={recvUserInfo.full}
+              value={recvUserInfo.mobile}
               onChange={handleRecvChange}
               placeholder="무선 연락처"
             />
 
             <Subtitle>배송 주소</Subtitle>
-            <input type="text" readOnly placeholder="주소" />
-            <input type="text" name="address2" placeholder="상세주소" />
-            <input type="text" readOnly placeholder="우편번호" />
+            <input
+              type="text"
+              readOnly
+              value={address.address1}
+              onClick={handleShow}
+              placeholder="주소"
+            />
+            <input
+              type="text"
+              name="address2"
+              value={address.address2}
+              onChange={handleAddress2Change}
+              placeholder="상세주소"
+            />
+            <input
+              type="text"
+              readOnly
+              value={address.postCode}
+              placeholder="우편번호"
+            />
 
             <Subtitle>결제</Subtitle>
             <select
@@ -249,12 +302,19 @@ function PaymentPage() {
                 </option>
               ))}
             </select>
+
             <PaymentBtn type="button" onClick={handleCompletePaymentClick}>
               주문
             </PaymentBtn>
             {paymentMethod === "bank-transfer" && (
               <AccountNum>계좌번호: 1111-1111-11111 키위은행</AccountNum>
             )}
+
+            <PostCodeModal
+              show={show}
+              handleClose={handleClose}
+              handleCompletePostCode={handleCompletePostCode}
+            />
           </div>
         </PaymentInfo>
       </div>
