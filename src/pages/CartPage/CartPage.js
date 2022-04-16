@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import clayful from "clayful/client-js";
 import CartItem from "./Sections/CartItem";
 import "./CartPage.scss";
@@ -83,6 +83,7 @@ function CartPage() {
     <div className="page-wrapper">
       <div className="shopping-cart">
         <h1 className="title">장바구니</h1>
+        <Link to="/history" className="go-history">주문 내역 조회</Link>
 
         <div className="shopping-cart-body">
           {items && items.length > 0 ? (

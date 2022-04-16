@@ -56,8 +56,10 @@ function HisrotyPage() {
 export default HisrotyPage;
 
 const HistoryTitle = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
   width: 50%;
   margin-bottom: 1em;
+  color: #5e6977;
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 300;
 `;
